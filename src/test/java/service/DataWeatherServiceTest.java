@@ -42,7 +42,7 @@ public class DataWeatherServiceTest {
 
         AverageWeather averageWeatherActual = dateWeatherService.calculateAverage("London");
 
-        AverageWeather averageWeatherExpected = new AverageWeather(291.25, 291.25, 1019.73);
+        AverageWeather averageWeatherExpected = new AverageWeather(292.1, 290.4, 1019.73);
 
         assertThat(averageWeatherActual, is(equalTo(averageWeatherExpected)));
     }

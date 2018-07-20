@@ -6,6 +6,8 @@ import repository.ForecastRepository;
 import repository.ForecastResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.OptionalDouble;
 
 public class DataWeatherService {
 
@@ -22,19 +24,20 @@ public class DataWeatherService {
 
 
     public AverageWeather calculateAverage(String city) throws IOException {
-        //1. Get the response from service
-        //2. A partir do objeto calcular a média da pressão
         ForecastResponse response = forecastRepository.getData(city);
-        double sumAverage = 0.0;
-        double sumDailyTemperature = 0.0;
-        double sumNightlyTemperature = 0.0;
-        int size = response.getDataWeather().size();
-        for (DateWeather data: response.getDataWeather()) {
-            sumAverage += data.getPressure();
-            sumDailyTemperature += data.getTemperature();
-            sumNightlyTemperature += data.getTemperature();
-        }
 
-        return new AverageWeather(sumDailyTemperature / size, sumNightlyTemperature / size, sumAverage / size);
+
+        OptionalDouble averageDaily = response.getDataWeather().parallelStream()
+                .filter(DateWeather::isDailyTemperature)
+                .mapToDouble(DateWeather::getTemperature).average();
+        OptionalDouble averageNightly = response.getDataWeather().stream()
+                .filter(DateWeather::isNightlyTemperature)
+                .mapToDouble(DateWeather::getTemperature).average();
+        OptionalDouble averagePressure = response.getDataWeather().stream()
+                .mapToDouble(DateWeather::getPressure).average();
+
+
+        return new AverageWeather(averageDaily.getAsDouble(), averageNightly.getAsDouble(),
+                averagePressure.getAsDouble());
     }
 }
