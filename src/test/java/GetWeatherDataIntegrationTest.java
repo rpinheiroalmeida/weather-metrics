@@ -3,7 +3,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.get;
-import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class GetWeatherDataIntegrationTest {
 
@@ -16,9 +16,9 @@ public class GetWeatherDataIntegrationTest {
 
     @Test
     public void  get_dataWeatherShouldReturn_Sucess() {
-        get("/data?city=london").then().statusCode(200).assertThat()
-                .body("average_pressure", any(String.class))
-                .body("average_daily", any(String.class))
-                .body("average_nightly", any(String.class));
+        get("/data?city=London").then().statusCode(200).assertThat()
+                .body("average_pressure", greaterThan(0.0f))
+                .body("average_daily", greaterThan(0.0f))
+                .body("average_nightly", greaterThan(0.0f));
     }
 }

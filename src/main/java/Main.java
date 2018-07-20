@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import presentation.WeatherView;
+import service.DataWeatherService;
 
 import static spark.Spark.get;
 
@@ -11,7 +12,8 @@ public class Main {
         get("/data", (request, response) -> {
             response.type("application/json");
 
-            return new Gson().toJson(new WeatherView("1", "1", "1"));
+            WeatherView weatherView = WeatherView.of(new DataWeatherService().calculateAverage("London"));
+            return new Gson().toJson(weatherView);
         });
     }
 

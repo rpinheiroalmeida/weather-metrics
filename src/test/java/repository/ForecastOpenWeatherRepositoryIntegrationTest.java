@@ -9,12 +9,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class ForecastRepositoryIntegrationTest {
+public class ForecastOpenWeatherRepositoryIntegrationTest {
 
     @Test
     public void shouldReturnCityLondon() throws IOException {
-        ForecastRepository forecastRepository = new ForecastRepository();
-        ForecastResponse response = forecastRepository.getData("London");
+        ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository();
+        ForecastResponse response = forecastOpenWeatherRepository.getData("London");
 
         City cityExpected = new City()
                 .withName("London")
@@ -27,8 +27,8 @@ public class ForecastRepositoryIntegrationTest {
 
     @Test
     public void shouldReturnCityBeloHorizonte() throws IOException {
-        ForecastRepository forecastRepository = new ForecastRepository();
-        ForecastResponse response = forecastRepository.getData("Belo Horizonte");
+        ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository();
+        ForecastResponse response = forecastOpenWeatherRepository.getData("Belo Horizonte");
 
         City cityExpected = new City()
                 .withName("Belo Horizonte")

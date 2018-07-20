@@ -88,4 +88,8 @@ public class ForecastResponse {
     public City getCity() {
         return city;
     }
+
+    public List<DateWeather> getDataWeather() {
+        return dataWather;
+    }
 }

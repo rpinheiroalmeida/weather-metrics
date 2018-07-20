@@ -2,43 +2,26 @@ package presentation;
 
 
 import com.google.gson.annotations.SerializedName;
+import service.AverageWeather;
 
 public class WeatherView {
 
     @SerializedName("average_daily")
-    private String averageDaily;
+    private double averageDaily;
     @SerializedName("average_nightly")
-    private String averageNightly;
+    private double averageNightly;
     @SerializedName("average_pressure")
-    private String averagePressure;
+    private double averagePressure;
 
-    public WeatherView(String averageDaily, String averageNightly, String averagePressure) {
+    public WeatherView(double averageDaily, double averageNightly, double averagePressure) {
         this.averageDaily = averageDaily;
         this.averageNightly = averageNightly;
         this.averagePressure = averagePressure;
     }
 
-    public String getAverageDaily() {
-        return averageDaily;
-    }
-
-    public void setAverageDaily(String averageDaily) {
-        this.averageDaily = averageDaily;
-    }
-
-    public String getAverageNightly() {
-        return averageNightly;
-    }
-
-    public void setAverageNightly(String averageNightly) {
-        this.averageNightly = averageNightly;
-    }
-
-    public String getAveragePressure() {
-        return averagePressure;
-    }
-
-    public void setAveragePressure(String averagePressure) {
-        this.averagePressure = averagePressure;
+    public static WeatherView of(AverageWeather averageWeather) {
+        return new WeatherView(averageWeather.getDaily(),
+                averageWeather.getNightly(),
+                averageWeather.getPressure());
     }
 }

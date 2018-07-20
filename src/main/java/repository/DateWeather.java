@@ -1,21 +1,16 @@
 package repository;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
 
 @JsonAdapter(DateWeatherDeserializer.class)
 public class DateWeather {
 
-    @SerializedName("dt")
     private long date;
 
-    @SerializedName("temp")
     private double temperature;
 
-    @SerializedName("$.main[0].pressure")
     private double pressure;
 
-    @SerializedName("dt_txt")
     private String dateFormatTxt;
 
     public DateWeather withDate(long date) {
@@ -73,5 +68,13 @@ public class DateWeather {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (dateFormatTxt != null ? dateFormatTxt.hashCode() : 0);
         return result;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public double getTemperature() {
+        return temperature;
     }
 }
