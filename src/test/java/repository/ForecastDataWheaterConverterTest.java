@@ -65,7 +65,7 @@ public class ForecastDataWheaterConverterTest {
 
     @Test
     public void shouldConvertToForecastResponseObjectWithOneNumberLine() {
-        ForecastResponse forecastResponseActual = new ForecastResponse()
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseActual = new ForecastOpenWeatherResponse()
                 .withCode(200)
                 .withNumberLines(1)
                 .withMessage("0.0063")
@@ -79,9 +79,9 @@ public class ForecastDataWheaterConverterTest {
                             .withPressure(1019.61)
                             .withDateFormatTxt("2018-07-20 18:00:00"));
 
-        ForecastResponse forecastResponseExpected = new Gson().fromJson(RESPONSE_WITH_ONE_LINE, ForecastResponse.class);
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_ONE_LINE, ForecastOpenWeatherResponse.class);
 
-        assertThat(forecastResponseExpected, is(equalTo(forecastResponseActual)));
+        assertThat(forecastOpenWeatherResponseExpected, is(equalTo(forecastOpenWeatherResponseActual)));
     }
 
     private static final String RESPONSE_WITH_TWO_LINES = "{\n" +
@@ -174,7 +174,7 @@ public class ForecastDataWheaterConverterTest {
 
     @Test
     public void shouldConvertToForecastResponseObjectWithTwoNumberLine() {
-        ForecastResponse forecastResponseActual = new ForecastResponse()
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseActual = new ForecastOpenWeatherResponse()
                 .withCode(200)
                 .withNumberLines(2)
                 .withMessage("0.0367")
@@ -193,10 +193,10 @@ public class ForecastDataWheaterConverterTest {
                         .withPressure(1019.85)
                         .withDateFormatTxt("2018-07-20 21:00:00"));
 
-        ForecastResponse forecastResponseExpected = new Gson().fromJson(RESPONSE_WITH_TWO_LINES,
-                ForecastResponse.class);
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_TWO_LINES,
+                ForecastOpenWeatherResponse.class);
 
-        assertThat(forecastResponseExpected, is(equalTo(forecastResponseActual)));
+        assertThat(forecastOpenWeatherResponseExpected, is(equalTo(forecastOpenWeatherResponseActual)));
     }
 
     private static final String RESPONSE_WITH_ACCESS_LIMITATION = "{\n" +
@@ -206,14 +206,14 @@ public class ForecastDataWheaterConverterTest {
 
     @Test
     public void shouldConvertToForecastResponseWithAccessLimitation() {
-        ForecastResponse forecastResponseExpected = new Gson().fromJson(RESPONSE_WITH_ACCESS_LIMITATION,
-                ForecastResponse.class);
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_ACCESS_LIMITATION,
+                ForecastOpenWeatherResponse.class);
 
-        ForecastResponse forecastResponseActual = new ForecastResponse()
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseActual = new ForecastOpenWeatherResponse()
                 .withCode(429)
                 .withMessage("Your account is temporary blocked due to exceeding of requests limitation of your subscription type. Please choose the proper subscription http://openweathermap.org/price");
 
-        assertThat(forecastResponseExpected, is(equalTo(forecastResponseActual)));
+        assertThat(forecastOpenWeatherResponseExpected, is(equalTo(forecastOpenWeatherResponseActual)));
 
     }
 
@@ -224,14 +224,14 @@ public class ForecastDataWheaterConverterTest {
 
     @Test
     public void shouldConvertToForecastResponseWithInvalidApiKey() {
-        ForecastResponse forecastResponseExpected = new Gson().fromJson(RESPONSE_WITH_INVALID_API_KEY,
-                ForecastResponse.class);
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_INVALID_API_KEY,
+                ForecastOpenWeatherResponse.class);
 
-        ForecastResponse forecastResponseActual = new ForecastResponse()
+        ForecastOpenWeatherResponse forecastOpenWeatherResponseActual = new ForecastOpenWeatherResponse()
                 .withCode(401)
                 .withMessage("Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.");
 
-        assertThat(forecastResponseExpected, is(equalTo(forecastResponseActual)));
+        assertThat(forecastOpenWeatherResponseExpected, is(equalTo(forecastOpenWeatherResponseActual)));
 
     }
 }

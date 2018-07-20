@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForecastResponse {
+public class ForecastOpenWeatherResponse {
 
     @SerializedName("cod")
     private int statusResponse;
@@ -21,34 +21,34 @@ public class ForecastResponse {
     private String message;
     private String status;
 
-    public ForecastResponse withCode(int code) {
+    public ForecastOpenWeatherResponse withCode(int code) {
         this.statusResponse = code;
         return this;
     }
 
-    public ForecastResponse withNumberLines(int numberLines) {
+    public ForecastOpenWeatherResponse withNumberLines(int numberLines) {
         this.quantityDays = numberLines;
         return this;
     }
 
-    public ForecastResponse withCity(City city) {
+    public ForecastOpenWeatherResponse withCity(City city) {
         this.city = city;
         return this;
     }
 
-    public ForecastResponse add(DateWeather dateWeather) {
+    public ForecastOpenWeatherResponse add(DateWeather dateWeather) {
         this.dataWather.add(dateWeather);
         return this;
     }
 
-    public ForecastResponse withMessage(String message) {
+    public ForecastOpenWeatherResponse withMessage(String message) {
         this.message = message;
         return this;
     }
 
     @Override
     public String toString() {
-        return "ForecastResponse{" +
+        return "ForecastOpenWeatherResponse{" +
                 "statusResponse=" + statusResponse +
                 ", quantityDays=" + quantityDays +
                 ", city=" + city +
@@ -62,7 +62,7 @@ public class ForecastResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ForecastResponse that = (ForecastResponse) o;
+        ForecastOpenWeatherResponse that = (ForecastOpenWeatherResponse) o;
 
         if (statusResponse != that.statusResponse) return false;
         if (quantityDays != that.quantityDays) return false;

@@ -14,7 +14,7 @@ public class ForecastOpenWeatherRepositoryIntegrationTest {
     @Test
     public void shouldReturnCityLondon() throws IOException {
         ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository();
-        ForecastResponse response = forecastOpenWeatherRepository.getData("London");
+        ForecastOpenWeatherResponse response = forecastOpenWeatherRepository.getData("London");
 
         City cityExpected = new City()
                 .withName("London")
@@ -28,7 +28,7 @@ public class ForecastOpenWeatherRepositoryIntegrationTest {
     @Test
     public void shouldReturnCityBeloHorizonte() throws IOException {
         ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository();
-        ForecastResponse response = forecastOpenWeatherRepository.getData("Belo Horizonte");
+        ForecastOpenWeatherResponse response = forecastOpenWeatherRepository.getData("Belo Horizonte");
 
         City cityExpected = new City()
                 .withName("Belo Horizonte")

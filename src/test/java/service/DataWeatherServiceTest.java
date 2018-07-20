@@ -14,8 +14,8 @@ public class DataWeatherServiceTest {
     private final class ForecastRepositoryStub implements ForecastRepository {
 
         @Override
-        public ForecastResponse getData(String city) throws IOException {
-            return new ForecastResponse()
+        public ForecastOpenWeatherResponse getData(String city) throws IOException {
+            return new ForecastOpenWeatherResponse()
                     .withCode(200)
                     .withNumberLines(2)
                     .withMessage("0.0367")
