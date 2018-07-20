@@ -49,4 +49,8 @@ public class City {
         result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
     }
+
+    public String getName() {
+        return name;
+    }
 }

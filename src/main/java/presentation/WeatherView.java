@@ -11,16 +11,14 @@ public class WeatherView {
     private double averageNightly;
     @SerializedName("average_pressure")
     private double averagePressure;
+    @SerializedName("city")
+    private String city;
 
-    public WeatherView(double averageDaily, double averageNightly, double averagePressure) {
+    public WeatherView(double averageDaily, double averageNightly, double averagePressure, String city) {
         this.averageDaily = averageDaily;
         this.averageNightly = averageNightly;
         this.averagePressure = averagePressure;
+        this.city = city;
     }
 
-    public static WeatherView of(AverageWeather averageWeather) {
-        return new WeatherView(averageWeather.getDaily(),
-                averageWeather.getNightly(),
-                averageWeather.getPressure());
-    }
 }

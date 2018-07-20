@@ -1,7 +1,6 @@
 package service;
 
 import model.ForecastWeather;
-import presentation.AverageWeather;
 import presentation.WeatherView;
 import repository.ForecastOpenWeatherRepository;
 import repository.ForecastRepository;
@@ -27,6 +26,6 @@ public class DataWeatherService {
         double averagePressure = forecastWeather.getAveragePressure();
 
 
-        return new WeatherView(averageDaily, averageNightly, averagePressure);
+        return new WeatherView(averageDaily, averageNightly, averagePressure, forecastWeather.getCity());
     }
 }

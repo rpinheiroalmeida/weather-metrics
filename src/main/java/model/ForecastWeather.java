@@ -10,11 +10,13 @@ public class ForecastWeather {
     private final Stream<WeatherMainData> dailyWeatherData;
     private final Stream<WeatherMainData> nightlyWeatherData;
     private final Stream<WeatherMainData> allData;
+    private final String city;
 
-    public ForecastWeather(Stream<WeatherMainData> dailyWeatherData, Stream<WeatherMainData> nightlyWeatherData, Stream<WeatherMainData> allData) {
+    public ForecastWeather(Stream<WeatherMainData> dailyWeatherData, Stream<WeatherMainData> nightlyWeatherData, Stream<WeatherMainData> allData, String city) {
         this.dailyWeatherData = dailyWeatherData;
         this.nightlyWeatherData = nightlyWeatherData;
         this.allData = allData;
+        this.city = city;
     }
 
 
@@ -43,7 +45,8 @@ public class ForecastWeather {
                                 listDataWeather.getPressure(),
                                 listDataWeather.getDate()));
 
-        return new ForecastWeather(dailyWeatherData, nightlyWeatherData, allData);
+        return new ForecastWeather(dailyWeatherData, nightlyWeatherData, allData,
+                forecastOpenWeatherResponse.getCityName());
     }
 
     public double getAverageDaily() {
@@ -56,5 +59,9 @@ public class ForecastWeather {
 
     public double getAveragePressure() {
         return allData.mapToDouble(WeatherMainData::getPressure).average().orElse(0.0);
+    }
+
+    public String getCity() {
+        return city;
     }
 }

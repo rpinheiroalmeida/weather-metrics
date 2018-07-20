@@ -91,4 +91,8 @@ public class ForecastOpenWeatherResponse {
     public List<ListDataWeather> getDataWeather() {
         return dataWather;
     }
+
+    public String getCityName() {
+        return city.getName();
+    }
 }
