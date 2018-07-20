@@ -1,20 +1,65 @@
 package repository;
 
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@JsonAdapter(DateWeatherDeserializer.class)
 public class ListDataWeather {
 
+    public static class MainDataWeather {
+        @SerializedName("temp")
+        private double temperature;
+
+        @SerializedName("pressure")
+        private double pressure;
+
+        public MainDataWeather(double temperature, double pressure) {
+            this.temperature = temperature;
+            this.pressure = pressure;
+        }
+
+        @Override
+        public String toString() {
+            return "MainDataWeather{" +
+                    "temperature=" + temperature +
+                    ", pressure=" + pressure +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            MainDataWeather that = (MainDataWeather) o;
+
+            if (Double.compare(that.temperature, temperature) != 0) return false;
+            return Double.compare(that.pressure, pressure) == 0;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result;
+            long temp;
+            temp = Double.doubleToLongBits(temperature);
+            result = (int) (temp ^ (temp >>> 32));
+            temp = Double.doubleToLongBits(pressure);
+            result = 31 * result + (int) (temp ^ (temp >>> 32));
+            return result;
+        }
+    }
+
+    @SerializedName("dt")
     private long date;
 
-    private double temperature;
+    @SerializedName("main")
+    private MainDataWeather mainDataWeather;
 
-    private double pressure;
-
+    @SerializedName("dt_txt")
     private String dateFormatTxt;
 
     public ListDataWeather withDate(long date) {
@@ -22,13 +67,8 @@ public class ListDataWeather {
         return this;
     }
 
-    public ListDataWeather withTemperature(double temperature) {
-        this.temperature = temperature;
-        return this;
-    }
-
-    public ListDataWeather withPressure(double pressure) {
-        this.pressure = pressure;
+    public ListDataWeather withMainDataWeather(MainDataWeather mainDataWeather) {
+        this.mainDataWeather = mainDataWeather;
         return this;
     }
 
@@ -37,14 +77,22 @@ public class ListDataWeather {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "ListDataWeather{" +
-                "date=" + date +
-                ", temperature=" + temperature +
-                ", pressure=" + pressure +
-                ", dateFormatTxt='" + dateFormatTxt + '\'' +
-                '}';
+
+//    public double getPressure() {
+//        return pressure;
+//    }
+//
+//    public double getTemperature() {
+//        return temperature;
+//    }
+
+    public boolean isDailyTemperature() {
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
+        return ldt.getHour() >= 6 && ldt.getHour() <= 18;
+    }
+
+    public boolean isNightlyTemperature() {
+        return !isDailyTemperature();
     }
 
     @Override
@@ -55,39 +103,26 @@ public class ListDataWeather {
         ListDataWeather that = (ListDataWeather) o;
 
         if (date != that.date) return false;
-        if (Double.compare(that.temperature, temperature) != 0) return false;
-        if (Double.compare(that.pressure, pressure) != 0) return false;
+        if (mainDataWeather != null ? !mainDataWeather.equals(that.mainDataWeather) : that.mainDataWeather != null)
+            return false;
         return dateFormatTxt != null ? dateFormatTxt.equals(that.dateFormatTxt) : that.dateFormatTxt == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (date ^ (date >>> 32));
-        temp = Double.doubleToLongBits(temperature);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(pressure);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        int result = (int) (date ^ (date >>> 32));
+        result = 31 * result + (mainDataWeather != null ? mainDataWeather.hashCode() : 0);
         result = 31 * result + (dateFormatTxt != null ? dateFormatTxt.hashCode() : 0);
         return result;
     }
 
-    public double getPressure() {
-        return pressure;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public boolean isDailyTemperature() {
-        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
-        return ldt.getHour() >= 6 && ldt.getHour() <= 18;
-    }
-
-    public boolean isNightlyTemperature() {
-        return !isDailyTemperature();
+    @Override
+    public String toString() {
+        return "ListDataWeather{" +
+                "date=" + date +
+                ", mainDataWeather=" + mainDataWeather +
+                ", dateFormatTxt='" + dateFormatTxt + '\'' +
+                '}';
     }
 }

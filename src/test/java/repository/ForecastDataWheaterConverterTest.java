@@ -75,8 +75,7 @@ public class ForecastDataWheaterConverterTest {
                                 .withCountry("GB"))
                 .add(new ListDataWeather()
                             .withDate(1532109600)
-                            .withTemperature(292.54)
-                            .withPressure(1019.61)
+                            .withMainDataWeather(new ListDataWeather.MainDataWeather(292.54, 1019.61))
                             .withDateFormatTxt("2018-07-20 18:00:00"));
 
         ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_ONE_LINE, ForecastOpenWeatherResponse.class);
@@ -184,13 +183,11 @@ public class ForecastDataWheaterConverterTest {
                         .withCountry("GB"))
                 .add(new ListDataWeather()
                         .withDate(1532109600)
-                        .withTemperature(292.1)
-                        .withPressure(1019.61)
+                        .withMainDataWeather(new ListDataWeather.MainDataWeather(292.1, 1019.61))
                         .withDateFormatTxt("2018-07-20 18:00:00"))
                 .add(new ListDataWeather()
                         .withDate(1532120400)
-                        .withTemperature(290.4)
-                        .withPressure(1019.85)
+                        .withMainDataWeather(new ListDataWeather.MainDataWeather(290.4, 1019.85))
                         .withDateFormatTxt("2018-07-20 21:00:00"));
 
         ForecastOpenWeatherResponse forecastOpenWeatherResponseExpected = new Gson().fromJson(RESPONSE_WITH_TWO_LINES,

@@ -26,17 +26,19 @@ public class DataWeatherService {
         ForecastOpenWeatherResponse response = forecastRepository.getData(city);
 
 
-        OptionalDouble averageDaily = response.getDataWeather().parallelStream()
-                .filter(ListDataWeather::isDailyTemperature)
-                .mapToDouble(ListDataWeather::getTemperature).average();
-        OptionalDouble averageNightly = response.getDataWeather().stream()
-                .filter(ListDataWeather::isNightlyTemperature)
-                .mapToDouble(ListDataWeather::getTemperature).average();
-        OptionalDouble averagePressure = response.getDataWeather().stream()
-                .mapToDouble(ListDataWeather::getPressure).average();
+//        OptionalDouble averageDaily = response.getDataWeather().parallelStream()
+//                .filter(ListDataWeather::isDailyTemperature)
+//                .mapToDouble(ListDataWeather::getTemperature).average();
+//        OptionalDouble averageNightly = response.getDataWeather().stream()
+//                .filter(ListDataWeather::isNightlyTemperature)
+//                .mapToDouble(ListDataWeather::getTemperature).average();
+//        OptionalDouble averagePressure = response.getDataWeather().stream()
+//                .mapToDouble(ListDataWeather::getPressure).average();
+//
+//
+//        return new AverageWeather(averageDaily.getAsDouble(), averageNightly.getAsDouble(),
+//                averagePressure.getAsDouble());
 
-
-        return new AverageWeather(averageDaily.getAsDouble(), averageNightly.getAsDouble(),
-                averagePressure.getAsDouble());
+        return null;
     }
 }

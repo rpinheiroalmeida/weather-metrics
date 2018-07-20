@@ -25,13 +25,11 @@ public class DataWeatherServiceTest {
                             .withCountry("GB"))
                     .add(new ListDataWeather()
                             .withDate(1532109600)
-                            .withTemperature(292.1)
-                            .withPressure(1019.61)
+                            .withMainDataWeather( new ListDataWeather.MainDataWeather(292.1, 290.4))
                             .withDateFormatTxt("2018-07-20 18:00:00"))
                     .add(new ListDataWeather()
                             .withDate(1532120400)
-                            .withTemperature(290.4)
-                            .withPressure(1019.85)
+                            .withMainDataWeather( new ListDataWeather.MainDataWeather(290.4, 1019.85))
                             .withDateFormatTxt("2018-07-20 21:00:00"));
         }
     }
