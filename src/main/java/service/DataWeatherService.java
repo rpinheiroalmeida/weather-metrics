@@ -1,12 +1,12 @@
 package service;
 
-import repository.ListDataWeather;
+import model.ForecastWeather;
+import presentation.AverageWeather;
+import presentation.WeatherView;
 import repository.ForecastOpenWeatherRepository;
 import repository.ForecastRepository;
-import repository.ForecastOpenWeatherResponse;
 
 import java.io.IOException;
-import java.util.OptionalDouble;
 
 public class DataWeatherService {
 
@@ -17,28 +17,16 @@ public class DataWeatherService {
         this.forecastRepository = new ForecastOpenWeatherRepository();
     }
 
-    public DataWeatherService(ForecastRepository forecastRepository) {
-        this.forecastRepository = forecastRepository;
-    }
 
 
-    public AverageWeather calculateAverage(String city) throws IOException {
-        ForecastOpenWeatherResponse response = forecastRepository.getData(city);
+    public WeatherView calculateAverage(String city) throws IOException {
+        ForecastWeather forecastWeather = forecastRepository.getData(city);
+
+        double averageDaily = forecastWeather.getAverageDaily();
+        double averageNightly = forecastWeather.getAverageNightly();
+        double averagePressure = forecastWeather.getAveragePressure();
 
 
-//        OptionalDouble averageDaily = response.getDataWeather().parallelStream()
-//                .filter(ListDataWeather::isDailyTemperature)
-//                .mapToDouble(ListDataWeather::getTemperature).average();
-//        OptionalDouble averageNightly = response.getDataWeather().stream()
-//                .filter(ListDataWeather::isNightlyTemperature)
-//                .mapToDouble(ListDataWeather::getTemperature).average();
-//        OptionalDouble averagePressure = response.getDataWeather().stream()
-//                .mapToDouble(ListDataWeather::getPressure).average();
-//
-//
-//        return new AverageWeather(averageDaily.getAsDouble(), averageNightly.getAsDouble(),
-//                averagePressure.getAsDouble());
-
-        return null;
+        return new WeatherView(averageDaily, averageNightly, averagePressure);
     }
 }

@@ -1,9 +1,11 @@
 package repository;
 
 
+import model.ForecastWeather;
+
 import java.io.IOException;
 
 public interface ForecastRepository {
 
-    ForecastOpenWeatherResponse getData(String city) throws IOException;
+    ForecastWeather getData(String city) throws IOException;
 }

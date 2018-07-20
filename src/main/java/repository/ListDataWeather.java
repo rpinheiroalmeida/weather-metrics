@@ -1,6 +1,5 @@
 package repository;
 
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.Instant;
@@ -8,6 +7,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 public class ListDataWeather {
+
+    public double getTemperature() {
+        return mainDataWeather.temperature;
+    }
+
+    public double getPressure() {
+        return mainDataWeather.pressure;
+    }
+
+    public long getDate() {
+        return date;
+    }
 
     public static class MainDataWeather {
         @SerializedName("temp")
@@ -76,15 +87,6 @@ public class ListDataWeather {
         this.dateFormatTxt = dateFormatTxt;
         return this;
     }
-
-
-//    public double getPressure() {
-//        return pressure;
-//    }
-//
-//    public double getTemperature() {
-//        return temperature;
-//    }
 
     public boolean isDailyTemperature() {
         LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);

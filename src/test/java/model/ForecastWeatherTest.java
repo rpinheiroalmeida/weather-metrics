@@ -1,0 +1,34 @@
+package model;
+
+import org.junit.Test;
+import repository.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class ForecastWeatherTest {
+
+    @Test
+    public void shouldCalculateAverage() {
+        ForecastOpenWeatherResponse response = new ForecastOpenWeatherResponse()
+                .withCode(200)
+                .withNumberLines(2)
+                .withMessage("0.0367")
+                .withCity(new City()
+                        .withId(2643743)
+                        .withName("London")
+                        .withCountry("GB"))
+                .add(new ListDataWeather()
+                        .withDate(1532109600)
+                        .withMainDataWeather( new ListDataWeather.MainDataWeather(292.1, 927.28))
+                        .withDateFormatTxt("2018-07-20 18:00:00"))
+                .add(new ListDataWeather()
+                        .withDate(1532120400)
+                        .withMainDataWeather( new ListDataWeather.MainDataWeather(290.4, 1019.85))
+                        .withDateFormatTxt("2018-07-20 21:00:00"));
+
+        assertThat(292.1, is(ForecastWeather.of(response).getAverageDaily()));
+        assertThat(290.4, is(ForecastWeather.of(response).getAverageNightly()));
+        assertThat(973.565, is(ForecastWeather.of(response).getAveragePressure()));
+    }
+}

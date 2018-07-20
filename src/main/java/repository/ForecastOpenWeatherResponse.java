@@ -19,7 +19,6 @@ public class ForecastOpenWeatherResponse {
     private List<ListDataWeather> dataWather = new ArrayList<>();
 
     private String message;
-    private String status;
 
     public ForecastOpenWeatherResponse withCode(int code) {
         this.statusResponse = code;

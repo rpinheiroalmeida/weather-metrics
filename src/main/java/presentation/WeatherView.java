@@ -2,7 +2,6 @@ package presentation;
 
 
 import com.google.gson.annotations.SerializedName;
-import service.AverageWeather;
 
 public class WeatherView {
 
