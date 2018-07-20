@@ -1,6 +1,6 @@
 package service;
 
-import repository.DateWeather;
+import repository.ListDataWeather;
 import repository.ForecastOpenWeatherRepository;
 import repository.ForecastRepository;
 import repository.ForecastOpenWeatherResponse;
@@ -27,13 +27,13 @@ public class DataWeatherService {
 
 
         OptionalDouble averageDaily = response.getDataWeather().parallelStream()
-                .filter(DateWeather::isDailyTemperature)
-                .mapToDouble(DateWeather::getTemperature).average();
+                .filter(ListDataWeather::isDailyTemperature)
+                .mapToDouble(ListDataWeather::getTemperature).average();
         OptionalDouble averageNightly = response.getDataWeather().stream()
-                .filter(DateWeather::isNightlyTemperature)
-                .mapToDouble(DateWeather::getTemperature).average();
+                .filter(ListDataWeather::isNightlyTemperature)
+                .mapToDouble(ListDataWeather::getTemperature).average();
         OptionalDouble averagePressure = response.getDataWeather().stream()
-                .mapToDouble(DateWeather::getPressure).average();
+                .mapToDouble(ListDataWeather::getPressure).average();
 
 
         return new AverageWeather(averageDaily.getAsDouble(), averageNightly.getAsDouble(),

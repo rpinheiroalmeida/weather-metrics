@@ -5,10 +5,9 @@ import com.google.gson.annotations.JsonAdapter;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.TemporalField;
 
 @JsonAdapter(DateWeatherDeserializer.class)
-public class DateWeather {
+public class ListDataWeather {
 
     private long date;
 
@@ -18,29 +17,29 @@ public class DateWeather {
 
     private String dateFormatTxt;
 
-    public DateWeather withDate(long date) {
+    public ListDataWeather withDate(long date) {
         this.date = date;
         return this;
     }
 
-    public DateWeather withTemperature(double temperature) {
+    public ListDataWeather withTemperature(double temperature) {
         this.temperature = temperature;
         return this;
     }
 
-    public DateWeather withPressure(double pressure) {
+    public ListDataWeather withPressure(double pressure) {
         this.pressure = pressure;
         return this;
     }
 
-    public DateWeather withDateFormatTxt(String dateFormatTxt) {
+    public ListDataWeather withDateFormatTxt(String dateFormatTxt) {
         this.dateFormatTxt = dateFormatTxt;
         return this;
     }
 
     @Override
     public String toString() {
-        return "DateWeather{" +
+        return "ListDataWeather{" +
                 "date=" + date +
                 ", temperature=" + temperature +
                 ", pressure=" + pressure +
@@ -53,7 +52,7 @@ public class DateWeather {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DateWeather that = (DateWeather) o;
+        ListDataWeather that = (ListDataWeather) o;
 
         if (date != that.date) return false;
         if (Double.compare(that.temperature, temperature) != 0) return false;

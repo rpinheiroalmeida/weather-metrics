@@ -4,13 +4,13 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class DateWeatherDeserializer implements JsonDeserializer<DateWeather> {
+public class DateWeatherDeserializer implements JsonDeserializer<ListDataWeather> {
 
     @Override
-    public DateWeather deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public ListDataWeather deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
-        return new DateWeather()
+        return new ListDataWeather()
                 .withDate(jsonObject.get("dt").getAsLong())
                 .withDateFormatTxt(jsonObject.get("dt_txt").getAsString())
                 .withTemperature(jsonObject.getAsJsonObject("main").get("temp").getAsDouble())

@@ -16,7 +16,7 @@ public class ForecastOpenWeatherResponse {
     private City city;
 
     @SerializedName("list")
-    private List<DateWeather> dataWather = new ArrayList<>();
+    private List<ListDataWeather> dataWather = new ArrayList<>();
 
     private String message;
     private String status;
@@ -36,8 +36,8 @@ public class ForecastOpenWeatherResponse {
         return this;
     }
 
-    public ForecastOpenWeatherResponse add(DateWeather dateWeather) {
-        this.dataWather.add(dateWeather);
+    public ForecastOpenWeatherResponse add(ListDataWeather listDataWeather) {
+        this.dataWather.add(listDataWeather);
         return this;
     }
 
@@ -89,7 +89,7 @@ public class ForecastOpenWeatherResponse {
         return city;
     }
 
-    public List<DateWeather> getDataWeather() {
+    public List<ListDataWeather> getDataWeather() {
         return dataWather;
     }
 }
