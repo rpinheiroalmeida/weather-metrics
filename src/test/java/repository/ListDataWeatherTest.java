@@ -33,4 +33,33 @@ public class ListDataWeatherTest {
         assertThat(listDataWeatherAt21Hour.isNightlyTemperature(), is(true));
         assertThat(listDataWeatherAtMiddleNight.isNightlyTemperature(), is(true));
     }
+
+    @Test
+    public void theDataIsInTheNextThreeDays() {
+        assertThat(new ListDataWeather()
+                .withDate(1532206800)
+                .withDateFormatTxt("2018-07-21 21:00:00").isInTheNextThreeDays(), is(true));
+        assertThat(new ListDataWeather()
+                .withDate(1532131200)
+                .withDateFormatTxt("2018-07-21 00:00:00").isInTheNextThreeDays(), is(true));
+        assertThat(new ListDataWeather()
+                .withDate(1532217600)
+                .withDateFormatTxt("2018-07-22 00:00:00").isInTheNextThreeDays(), is(true));
+        assertThat(new ListDataWeather()
+                .withDate(1532304000)
+                .withDateFormatTxt("2018-07-23 00:00:00").isInTheNextThreeDays(), is(true));
+    }
+
+    @Test
+    public void theDataIsNotInTheNextThreeDays() {
+
+
+        assertThat(new ListDataWeather()
+                .withDate(1532412000)
+                .withDateFormatTxt("2018-07-24 06:00:00").isInTheNextThreeDays(), is(false));
+        assertThat(new ListDataWeather()
+                .withDate(1532509200)
+                .withDateFormatTxt("2018-07-25 09:00:00").isInTheNextThreeDays(), is(false));
+    }
+
 }

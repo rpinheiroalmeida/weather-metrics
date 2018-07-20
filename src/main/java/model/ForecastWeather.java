@@ -25,6 +25,7 @@ public class ForecastWeather {
         Stream<WeatherMainData> nightlyWeatherData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
                 .filter(ListDataWeather::isNightlyTemperature)
+                .filter(ListDataWeather::isInTheNextThreeDays)
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                         listDataWeather.getPressure(),
@@ -33,6 +34,7 @@ public class ForecastWeather {
         Stream<WeatherMainData> dailyWeatherData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
                 .filter(ListDataWeather::isDailyTemperature)
+                .filter(ListDataWeather::isInTheNextThreeDays)
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                                 listDataWeather.getPressure(),
@@ -40,6 +42,7 @@ public class ForecastWeather {
 
         Stream<WeatherMainData> allData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
+                .filter(ListDataWeather::isInTheNextThreeDays)
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                                 listDataWeather.getPressure(),
