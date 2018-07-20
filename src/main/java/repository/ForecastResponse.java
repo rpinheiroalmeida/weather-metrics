@@ -19,6 +19,7 @@ public class ForecastResponse {
     private List<DateWeather> dataWather = new ArrayList<>();
 
     private String message;
+    private String status;
 
     public ForecastResponse withCode(int code) {
         this.statusResponse = code;
@@ -78,5 +79,13 @@ public class ForecastResponse {
         result = 31 * result + (dataWather != null ? dataWather.hashCode() : 0);
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
+    }
+
+    public int getStatusResponse() {
+        return statusResponse;
+    }
+
+    public City getCity() {
+        return city;
     }
 }
