@@ -17,7 +17,7 @@ public class DataWeatherService {
     private ForecastRepository forecastRepository;
     private static final int MAX_ENTRIES = 1000;
 
-    Map<String, WeatherView> cache = new LinkedHashMap<String, WeatherView>(MAX_ENTRIES + 1, .75F, true) {
+    private Map<String, WeatherView> cache = new LinkedHashMap<String, WeatherView>(MAX_ENTRIES + 1, .75F, true) {
 
         public boolean removeEldestEntry(Map.Entry<String, WeatherView> eldest) {
             return size() > MAX_ENTRIES;
