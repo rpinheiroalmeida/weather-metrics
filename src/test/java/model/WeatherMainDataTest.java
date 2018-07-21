@@ -1,7 +1,6 @@
 package model;
 
 import org.junit.Test;
-import repository.ListDataWeather;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

@@ -16,8 +16,6 @@ public class DataWeatherService {
         this.forecastRepository = new ForecastOpenWeatherRepository();
     }
 
-
-
     public WeatherView calculateAverage(String city) throws IOException {
         ForecastWeather forecastWeather = forecastRepository.getData(city);
 

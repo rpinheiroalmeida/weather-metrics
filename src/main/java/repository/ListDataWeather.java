@@ -2,10 +2,6 @@ package repository;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
 public class ListDataWeather {
 
     public double getTemperature() {
