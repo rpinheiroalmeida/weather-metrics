@@ -4,6 +4,9 @@ package model;
 import repository.ForecastOpenWeatherResponse;
 import repository.ListDataWeather;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.stream.Stream;
 
 public class ForecastWeather {
@@ -20,21 +23,28 @@ public class ForecastWeather {
     }
 
 
-    public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse) {
+    public static boolean isInTheNextThreeDays(long date) {
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
+        LocalDateTime ldtNow = LocalDateTime.now();
+        return ldtNow.getDayOfMonth() + 3 >= ldt.getDayOfMonth() ;
+    }
 
+
+    public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse) {
         Stream<WeatherMainData> nightlyWeatherData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
+                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
                 .filter(ListDataWeather::isNightlyTemperature)
-                .filter(ListDataWeather::isInTheNextThreeDays)
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                         listDataWeather.getPressure(),
-                        listDataWeather.getDate()));
+                        listDataWeather.getDate()))
+                ;
 
         Stream<WeatherMainData> dailyWeatherData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
+                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
                 .filter(ListDataWeather::isDailyTemperature)
-                .filter(ListDataWeather::isInTheNextThreeDays)
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                                 listDataWeather.getPressure(),
@@ -42,7 +52,7 @@ public class ForecastWeather {
 
         Stream<WeatherMainData> allData = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
-                .filter(ListDataWeather::isInTheNextThreeDays)
+                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
                 .map(listDataWeather ->
                         new WeatherMainData(listDataWeather.getTemperature(),
                                 listDataWeather.getPressure(),

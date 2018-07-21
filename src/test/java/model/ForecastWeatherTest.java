@@ -1,5 +1,6 @@
 package model;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import repository.*;
 
@@ -75,5 +76,20 @@ public class ForecastWeatherTest {
         assertThat("AverageDaily", ForecastWeather.of(response).getAverageDaily(), is(281.068));
         assertThat("AverageNightly", ForecastWeather.of(response).getAverageNightly(), is(289.6015));
         assertThat("Pressure", ForecastWeather.of(response).getAveragePressure(), is(928.6380000000001));
+    }
+
+    @Test
+    public void theDataIsInTheNextThreeDays() {
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532131200), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532217600), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532304000), Matchers.is(true));
+    }
+
+    @Test
+    public void theDataIsNotInTheNextThreeDays() {
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532412000), Matchers.is(false));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532509200), Matchers.is(false));
+
     }
 }
