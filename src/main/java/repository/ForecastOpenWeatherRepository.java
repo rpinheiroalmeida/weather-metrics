@@ -1,7 +1,6 @@
 package repository;
 
 import com.google.gson.Gson;
-import exception.WeatherException;
 import http.HttpOpenWeatherRequest;
 import model.ForecastWeather;
 
@@ -17,14 +16,10 @@ public class ForecastOpenWeatherRepository implements ForecastRepository {
     }
 
 
-    public ForecastWeather getData(String city) throws IOException, WeatherException {
+    public ForecastWeather getData(String city) throws IOException {
         String response = request.getResponseContent(city);
         ForecastOpenWeatherResponse forecastOpenWeatherResponse = new Gson()
                 .fromJson(response, ForecastOpenWeatherResponse.class);
-
-        if (forecastOpenWeatherResponse.getStatusResponse() == 401) {
-            throw  new WeatherException("Error to get the data from OpenWeatherMap.", forecastOpenWeatherResponse.getStatusResponse());
-        }
 
         return ForecastWeather.of(forecastOpenWeatherResponse);
     }

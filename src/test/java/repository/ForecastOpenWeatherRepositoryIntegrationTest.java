@@ -1,8 +1,8 @@
 package repository;
 
-import exception.WeatherException;
 import http.HttpOpenWeatherRequest;
 import model.ForecastWeather;
+import org.apache.http.client.HttpResponseException;
 import org.junit.Test;
 
 
@@ -18,7 +18,7 @@ public class ForecastOpenWeatherRepositoryIntegrationTest {
     HttpOpenWeatherRequest mockRequest = mock(HttpOpenWeatherRequest.class);
 
     @Test
-    public void shouldReturnCityLondon() throws IOException, WeatherException {
+    public void shouldReturnCityLondon() throws IOException {
         ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository(mockRequest);
         when(mockRequest.getResponseContent("London")).thenReturn("{\n" +
                 "    \"cod\": \"200\",\n" +
@@ -82,7 +82,7 @@ public class ForecastOpenWeatherRepositoryIntegrationTest {
     }
 
     @Test
-    public void shouldReturnCityBeloHorizonte() throws IOException, WeatherException {
+    public void shouldReturnCityBeloHorizonte() throws IOException {
         ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository(mockRequest);
         when(mockRequest.getResponseContent("Belo Horizonte")).thenReturn("{\n" +
                 "    \"cod\": \"200\",\n" +
@@ -143,12 +143,9 @@ public class ForecastOpenWeatherRepositoryIntegrationTest {
     }
 
 
-    @Test(expected = WeatherException.class)
-    public void shouldThrowExceptionWhenOpenWeatherReturnInvalidApiKeyError() throws IOException, WeatherException {
-        when(mockRequest.getResponseContent("Belo Horizonte")).thenReturn("{\n" +
-                "    \"cod\": 401,\n" +
-                "    \"message\": \"Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.\"\n" +
-                "}");
+    @Test(expected = HttpResponseException.class)
+    public void shouldThrowExceptionWhenOpenWeatherReturnInvalidApiKeyError() throws IOException {
+        when(mockRequest.getResponseContent("Belo Horizonte")).thenThrow(HttpResponseException.class);
 
         ForecastOpenWeatherRepository forecastOpenWeatherRepository = new ForecastOpenWeatherRepository(mockRequest);
         forecastOpenWeatherRepository.getData("Belo Horizonte");

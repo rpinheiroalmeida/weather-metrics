@@ -1,6 +1,5 @@
 package service;
 
-import exception.WeatherException;
 import http.HttpOpenWeatherRequest;
 import model.ForecastWeather;
 import presentation.WeatherView;
@@ -18,7 +17,7 @@ public class DataWeatherService {
         this.forecastRepository = new ForecastOpenWeatherRepository(new HttpOpenWeatherRequest());
     }
 
-    public WeatherView calculateAverage(String city) throws IOException, WeatherException {
+    public WeatherView calculateAverage(String city) throws IOException {
         ForecastWeather forecastWeather = forecastRepository.getData(city);
 
         double averageDaily = forecastWeather.getAverageDaily();

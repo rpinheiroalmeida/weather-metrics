@@ -1,5 +1,4 @@
 import com.google.gson.Gson;
-import exception.WeatherException;
 import org.apache.http.client.HttpResponseException;
 import presentation.WeatherView;
 import service.DataWeatherService;
@@ -27,8 +26,6 @@ public class Main {
 
             try {
                 return new Gson().toJson(service.calculateAverage(city));
-            } catch (WeatherException e) {
-                return new Gson().toJson(WeatherView.NULL);
             } catch (HttpResponseException e) {
                 e.printStackTrace();
                 response.status(e.getStatusCode());
