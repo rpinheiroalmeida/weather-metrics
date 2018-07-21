@@ -59,8 +59,12 @@ public class GetWeatherDataIntegrationTest {
 
     @Test
     public void get_errorWhenCityIsIncorrect() {
-
         get("/data?city=Belo HorizonteHHH").then().statusCode(404);
+    }
+
+    @Test
+    public void get_errorWhenCityIsEmpty() {
+        get("/data?city=").then().statusCode(400);
     }
 
 }

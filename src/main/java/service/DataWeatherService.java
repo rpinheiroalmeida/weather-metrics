@@ -6,6 +6,8 @@ import presentation.WeatherView;
 import repository.ForecastOpenWeatherRepository;
 import repository.ForecastRepository;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,8 +29,11 @@ public class DataWeatherService {
         this.forecastRepository = new ForecastOpenWeatherRepository(new HttpOpenWeatherRequest());
     }
 
-    public WeatherView calculateAverage(String city) throws IOException {
+    public DataWeatherService(ForecastRepository forecastRepository) {
+        this.forecastRepository = forecastRepository;
+    }
 
+    public WeatherView calculateAverage(String city) throws IOException {
         if (cache.containsKey(city)) {
             return cache.get(city);
         } else {

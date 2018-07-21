@@ -1,6 +1,5 @@
 import com.google.gson.Gson;
 import org.apache.http.client.HttpResponseException;
-import presentation.WeatherView;
 import service.DataWeatherService;
 
 import static spark.Spark.get;
@@ -28,7 +27,7 @@ public class Main {
                 return new Gson().toJson(service.calculateAverage(city));
             } catch (HttpResponseException e) {
                 response.status(e.getStatusCode());
-                return new Gson().toJson(WeatherView.NULL);
+                return new Gson().toJson(e.getMessage());
             }
         });
     }

@@ -16,8 +16,6 @@ public class ForecastWeather {
     private final double averageNightly;
     private final double averagePressure;
 
-
-
     public ForecastWeather(double averageDaily, double averageNightly, double averagePressure, String cityName) {
         this.averageDaily = averageDaily;
         this.averageNightly = averageNightly;
@@ -74,4 +72,5 @@ public class ForecastWeather {
     public double getAveragePressure() {
         return averagePressure;
     }
+
 }
