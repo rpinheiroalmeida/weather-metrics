@@ -2,24 +2,27 @@ package model;
 
 
 import repository.ForecastOpenWeatherResponse;
-import repository.ListDataWeather;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ForecastWeather {
-    private final Stream<WeatherMainData> dailyWeatherData;
-    private final Stream<WeatherMainData> nightlyWeatherData;
-    private final Stream<WeatherMainData> allData;
-    private final String city;
 
-    public ForecastWeather(Stream<WeatherMainData> dailyWeatherData, Stream<WeatherMainData> nightlyWeatherData, Stream<WeatherMainData> allData, String city) {
-        this.dailyWeatherData = dailyWeatherData;
-        this.nightlyWeatherData = nightlyWeatherData;
-        this.allData = allData;
-        this.city = city;
+    private final String city;
+    private final double averageDaily;
+    private final double averageNightly;
+    private final double averagePressure;
+
+
+
+    public ForecastWeather(double averageDaily, double averageNightly, double averagePressure, String cityName) {
+        this.averageDaily = averageDaily;
+        this.averageNightly = averageNightly;
+        this.averagePressure = averagePressure;
+        this.city = cityName;
     }
 
 
@@ -31,50 +34,44 @@ public class ForecastWeather {
 
 
     public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse) {
-        Stream<WeatherMainData> nightlyWeatherData = forecastOpenWeatherResponse.getDataWeather()
+        List<WeatherMainData> data = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
                 .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
-                .filter(ListDataWeather::isNightlyTemperature)
-                .map(listDataWeather ->
-                        new WeatherMainData(listDataWeather.getTemperature(),
+                .map(listDataWeather -> new WeatherMainData(listDataWeather.getTemperature(),
                         listDataWeather.getPressure(),
-                        listDataWeather.getDate()))
-                ;
+                        listDataWeather.getDate())).collect(Collectors.toList());
 
-        Stream<WeatherMainData> dailyWeatherData = forecastOpenWeatherResponse.getDataWeather()
-                .stream()
-                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
-                .filter(ListDataWeather::isDailyTemperature)
-                .map(listDataWeather ->
-                        new WeatherMainData(listDataWeather.getTemperature(),
-                                listDataWeather.getPressure(),
-                                listDataWeather.getDate()));
+        double averageDaily = data.stream()
+                .filter(WeatherMainData::isDailyTemperature)
+                .mapToDouble(WeatherMainData::getTemperature)
+                .average().orElse(0.0);
 
-        Stream<WeatherMainData> allData = forecastOpenWeatherResponse.getDataWeather()
-                .stream()
-                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
-                .map(listDataWeather ->
-                        new WeatherMainData(listDataWeather.getTemperature(),
-                                listDataWeather.getPressure(),
-                                listDataWeather.getDate()));
+        double averageNightly = data.stream()
+                .filter(WeatherMainData::isNightlyTemperature)
+                .mapToDouble(WeatherMainData::getTemperature)
+                .average().orElse(0.0);
 
-        return new ForecastWeather(dailyWeatherData, nightlyWeatherData, allData,
+        double averagePressure = data.stream()
+                .mapToDouble(WeatherMainData::getPressure)
+                .average().orElse(0.0);
+
+        return new ForecastWeather(averageDaily, averageNightly, averagePressure,
                 forecastOpenWeatherResponse.getCityName());
-    }
-
-    public double getAverageDaily() {
-        return dailyWeatherData.mapToDouble(WeatherMainData::getTemperature).average().orElse(0.0);
-    }
-
-    public double getAverageNightly() {
-        return nightlyWeatherData.mapToDouble(WeatherMainData::getTemperature).average().orElse(0.0);
-    }
-
-    public double getAveragePressure() {
-        return allData.mapToDouble(WeatherMainData::getPressure).average().orElse(0.0);
     }
 
     public String getCity() {
         return city;
+    }
+
+    public double getAverageDaily() {
+        return averageDaily;
+    }
+
+    public double getAverageNightly() {
+        return averageNightly;
+    }
+
+    public double getAveragePressure() {
+        return averagePressure;
     }
 }

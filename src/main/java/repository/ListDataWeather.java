@@ -88,12 +88,6 @@ public class ListDataWeather {
         return this;
     }
 
-//    public boolean isInTheNextThreeDays() {
-//        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
-//        LocalDateTime ldtNow = LocalDateTime.now();
-//        return ldtNow.getDayOfMonth() + 3 >= ldt.getDayOfMonth() ;
-//    }
-
     public boolean isDailyTemperature() {
         LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
         return ldt.getHour() >= 6 && ldt.getHour() <= 18;
