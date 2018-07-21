@@ -4,7 +4,6 @@ import http.HttpOpenWeatherRequest;
 import model.ForecastWeather;
 import presentation.WeatherView;
 import repository.ForecastOpenWeatherRepository;
-import repository.ForecastOpenWeatherResponse;
 import repository.ForecastRepository;
 
 import java.io.IOException;
