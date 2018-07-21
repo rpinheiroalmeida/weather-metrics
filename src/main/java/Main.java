@@ -27,7 +27,6 @@ public class Main {
             try {
                 return new Gson().toJson(service.calculateAverage(city));
             } catch (HttpResponseException e) {
-                e.printStackTrace();
                 response.status(e.getStatusCode());
                 return new Gson().toJson(WeatherView.NULL);
             }

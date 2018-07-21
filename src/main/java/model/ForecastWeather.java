@@ -26,17 +26,17 @@ public class ForecastWeather {
     }
 
 
-    public static boolean isInTheNextThreeDays(long date) {
-        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
-        LocalDateTime ldtNow = LocalDateTime.now();
-        return ldtNow.getDayOfMonth() + 3 >= ldt.getDayOfMonth() ;
+    public static boolean isInTheNextThreeDays(long startDate, long endDate) {
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(endDate), ZoneOffset.UTC);
+        LocalDateTime ldtStart = LocalDateTime.ofInstant(Instant.ofEpochSecond(startDate), ZoneOffset.UTC);
+        return ldtStart.getDayOfMonth() + 3 >= ldt.getDayOfMonth() ;
     }
 
 
-    public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse) {
+    public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse, long startTime) {
         List<WeatherMainData> data = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
-                .filter(listDataWeather -> isInTheNextThreeDays(listDataWeather.getDate()))
+                .filter(listDataWeather -> isInTheNextThreeDays(startTime, listDataWeather.getDate()))
                 .map(listDataWeather -> new WeatherMainData(listDataWeather.getTemperature(),
                         listDataWeather.getPressure(),
                         listDataWeather.getDate())).collect(Collectors.toList());

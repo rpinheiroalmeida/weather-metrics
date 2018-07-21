@@ -41,6 +41,13 @@ public class GetWeatherDataIntegrationTest {
                 .body("average_nightly", greaterThan(0.0f))
                 .body("city", is("Belo Horizonte"))
         ;
+
+        get("/data?city=Belo Horizonte").then().statusCode(200).assertThat()
+                .body("average_pressure", greaterThan(0.0f))
+                .body("average_daily", greaterThan(0.0f))
+                .body("average_nightly", greaterThan(0.0f))
+                .body("city", is("Belo Horizonte"))
+        ;
     }
 
     @Test

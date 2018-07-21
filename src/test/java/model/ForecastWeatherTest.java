@@ -4,6 +4,8 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import repository.*;
 
+import java.time.Instant;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -28,9 +30,9 @@ public class ForecastWeatherTest {
                         .withMainDataWeather( new ListDataWeather.MainDataWeather(290.4, 1019.85))
                         .withDateFormatTxt("2018-07-20 21:00:00"));
 
-        assertThat(292.1, is(ForecastWeather.of(response).getAverageDaily()));
-        assertThat(290.4, is(ForecastWeather.of(response).getAverageNightly()));
-        assertThat(973.565, is(ForecastWeather.of(response).getAveragePressure()));
+        assertThat(292.1, is(ForecastWeather.of(response, 1532109600).getAverageDaily()));
+        assertThat(290.4, is(ForecastWeather.of(response, 1532109600).getAverageNightly()));
+        assertThat(973.565, is(ForecastWeather.of(response, 1532109600).getAveragePressure()));
     }
 
     @Test
@@ -73,23 +75,24 @@ public class ForecastWeatherTest {
                         .withDateFormatTxt("2018-07-25 09:00:00"))
                 ;
 
-        assertThat("AverageDaily", ForecastWeather.of(response).getAverageDaily(), is(281.068));
-        assertThat("AverageNightly", ForecastWeather.of(response).getAverageNightly(), is(289.6015));
-        assertThat("Pressure", ForecastWeather.of(response).getAveragePressure(), is(928.6380000000001));
+        assertThat("AverageDaily", ForecastWeather.of(response, 1532120400).getAverageDaily(), is(281.068));
+        assertThat("AverageNightly", ForecastWeather.of(response, 1532120400).getAverageNightly(), is(289.6015));
+        assertThat("Pressure", ForecastWeather.of(response, 1532120400).getAveragePressure(), is(928.6380000000001));
     }
 
     @Test
     public void theDataIsInTheNextThreeDays() {
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532131200), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532217600), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532304000), Matchers.is(true));
+        System.out.println(Instant.now().getEpochSecond());
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532206800), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532131200), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532217600), Matchers.is(true));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532304000), Matchers.is(true));
     }
 
     @Test
     public void theDataIsNotInTheNextThreeDays() {
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532412000), Matchers.is(false));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532509200), Matchers.is(false));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532120400, 1532412000), Matchers.is(false));
+        assertThat(ForecastWeather.isInTheNextThreeDays(1532120400, 1532509200), Matchers.is(false));
 
     }
 }
