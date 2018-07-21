@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class ForecastWeather {
 
+    private static final int NEXT_DAY_TO_FILTER = 3;
     private final String city;
     private final double averageDaily;
     private final double averageNightly;
@@ -27,7 +28,7 @@ public class ForecastWeather {
     public static boolean isInTheNextThreeDays(long startDate, long endDate) {
         LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(endDate), ZoneOffset.UTC);
         LocalDateTime ldtStart = LocalDateTime.ofInstant(Instant.ofEpochSecond(startDate), ZoneOffset.UTC);
-        return ldtStart.getDayOfMonth() + 3 >= ldt.getDayOfMonth() ;
+        return ldtStart.getDayOfMonth() + NEXT_DAY_TO_FILTER >= ldt.getDayOfMonth() ;
     }
 
 
