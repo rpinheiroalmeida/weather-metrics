@@ -14,6 +14,8 @@ public class WeatherView {
     @SerializedName("city")
     private String city;
 
+    public static final WeatherView NULL = new WeatherView(0.0, 0.0, 0.0, "");
+
     public WeatherView(double averageDaily, double averageNightly, double averagePressure, String city) {
         this.averageDaily = averageDaily;
         this.averageNightly = averageNightly;

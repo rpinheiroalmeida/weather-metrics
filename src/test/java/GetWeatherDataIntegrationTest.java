@@ -1,4 +1,6 @@
 import io.restassured.RestAssured;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -10,9 +12,15 @@ public class GetWeatherDataIntegrationTest {
 
     @BeforeClass
     public static void setUp() throws InterruptedException {
-        Main.start();
+        Main.start("b79bfe9da8b1e51883b30b37fa7460e8");
+
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 4567;
+    }
+
+    @After
+    public void tearDown() {
+        System.setProperty("api.key", "b79bfe9da8b1e51883b30b37fa7460e8");
     }
 
     @Test
@@ -34,4 +42,18 @@ public class GetWeatherDataIntegrationTest {
                 .body("city", is("Belo Horizonte"))
         ;
     }
+
+    @Test
+    public void get_errorWhenApiKeyIsIncorrect() {
+        System.setProperty("api.key", "b79bfe9da8b1e51883b30b37fa7460e81");
+
+        get("/data?city=Belo Horizonte").then().statusCode(401);
+    }
+
+    @Test
+    public void get_errorWhenCityIsIncorrect() {
+
+        get("/data?city=Belo HorizonteHHH").then().statusCode(404);
+    }
+
 }
