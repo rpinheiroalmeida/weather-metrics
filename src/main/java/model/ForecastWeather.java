@@ -2,16 +2,13 @@ package model;
 
 
 import repository.ForecastOpenWeatherResponse;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import util.DateUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ForecastWeather {
 
-    private static final int NEXT_DAY_TO_FILTER = 3;
+
     private final String city;
     private final double averageDaily;
     private final double averageNightly;
@@ -25,17 +22,10 @@ public class ForecastWeather {
     }
 
 
-    public static boolean isInTheNextThreeDays(long startDate, long endDate) {
-        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochSecond(endDate), ZoneOffset.UTC);
-        LocalDateTime ldtStart = LocalDateTime.ofInstant(Instant.ofEpochSecond(startDate), ZoneOffset.UTC);
-        return ldtStart.getDayOfMonth() + NEXT_DAY_TO_FILTER >= ldt.getDayOfMonth() ;
-    }
-
-
     public static ForecastWeather of(ForecastOpenWeatherResponse forecastOpenWeatherResponse, long startTime) {
         List<WeatherMainData> data = forecastOpenWeatherResponse.getDataWeather()
                 .stream()
-                .filter(listDataWeather -> isInTheNextThreeDays(startTime, listDataWeather.getDate()))
+                .filter(listDataWeather -> DateUtil.isInTheNextThreeDays(startTime, listDataWeather.getDate()))
                 .map(listDataWeather -> new WeatherMainData(listDataWeather.getTemperature(),
                         listDataWeather.getPressure(),
                         listDataWeather.getDate())).collect(Collectors.toList());

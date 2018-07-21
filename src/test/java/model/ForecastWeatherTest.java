@@ -79,20 +79,4 @@ public class ForecastWeatherTest {
         assertThat("AverageNightly", ForecastWeather.of(response, 1532120400).getAverageNightly(), is(289.6015));
         assertThat("Pressure", ForecastWeather.of(response, 1532120400).getAveragePressure(), is(928.6380000000001));
     }
-
-    @Test
-    public void theDataIsInTheNextThreeDays() {
-        System.out.println(Instant.now().getEpochSecond());
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532206800), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532131200), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532217600), Matchers.is(true));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532206800, 1532304000), Matchers.is(true));
-    }
-
-    @Test
-    public void theDataIsNotInTheNextThreeDays() {
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532120400, 1532412000), Matchers.is(false));
-        assertThat(ForecastWeather.isInTheNextThreeDays(1532120400, 1532509200), Matchers.is(false));
-
-    }
 }
