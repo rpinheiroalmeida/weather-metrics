@@ -19,7 +19,7 @@ http://localhost:4567
 
 - Important decisions:
 
---> I keep the code most simple possible, and this guide me to take 
+--> I keep the code simplest as possible, and this guide me to take 
 some decisions as:
  - Use spark as framework for REST
  - Use Gson as Serializer and Deserializer Json
